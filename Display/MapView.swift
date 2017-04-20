@@ -29,6 +29,11 @@ public final class MapView: NSView {
             self.needsDisplay = true
         }
     }
+    public var timestamp: TimeInterval? {
+        didSet {
+            self.needsDisplay = true
+        }
+    }
     public var debug: String? {
         didSet {
             self.needsDisplay = true
@@ -137,6 +142,10 @@ public final class MapView: NSView {
         if let flights = self.flights {
             self.draw(flights: flights)
         }
+        if let timestamp = self.timestamp {
+            let string = String(timeInterval: timestamp) ?? "00:00:00"
+            self.draw(text: string, at: CGPoint(x: self.frame.width - 50, y: 10), foregroundColor: .white, backgroundColor: .black)
+        }
         if let debug = self.debug {
             self.draw(text: debug, at: CGPoint(x: 10, y: 10), foregroundColor: .white, backgroundColor: .black)
         }
@@ -208,7 +217,7 @@ public extension MapView {
             drawSymbol(forNavaid: point, at: screen)
 
             let offset = CGPoint(x: 5, y: 5)
-            draw(text: point.title, at: CGPoint(x: screen.x + offset.x, y: screen.y + offset.y), foregroundColor: .darkGray)
+            //draw(text: point.title, at: CGPoint(x: screen.x + offset.x, y: screen.y + offset.y), foregroundColor: .darkGray)
         }
     }
 

@@ -49,8 +49,9 @@ final class MainWindowController: NSWindowController {
         mapView.airspace = airspace
         mapView.center = Coordinate(latitude: 43.9, longitude: 20.16)
 
-        self.client.flightsUpdate = { [weak self] flights in
-            self?.mapView?.flights = flights
+        self.client.flightsUpdate = { [weak self] message in
+            self?.mapView?.timestamp = message.timestamp
+            self?.mapView?.flights = message.flights
         }
     }
 }
