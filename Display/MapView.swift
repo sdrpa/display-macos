@@ -15,6 +15,7 @@
  */
 
 import AirspaceKit
+import AircraftKit
 import ATCKit
 import Cocoa
 import FDPS

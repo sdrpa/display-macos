@@ -1,0 +1,20 @@
+#!/bin/bash
+
+SCRIPT="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+DIR="Dependencies"
+
+cd "$SCRIPT"
+rm -rf "$SCRIPT/$DIR"
+mkdir "$SCRIPT/$DIR"
+
+declare -a modules=("aircraftkit" "airspacekit" "atckit" "fdps" "foundationkit" "measure" "proj4" "projection")
+
+for module in "${modules[@]}"
+do
+	git clone "https://github.com/sdrpa/$module.git" "$SCRIPT/$DIR/$module"
+   	cd "$SCRIPT/$DIR/$module"
+   	if [ "$module" != "proj4" ]; then
+   		swift package generate-xcodeproj
+   	fi
+done
+printf "\nDon't forget to add '\$(SRCROOT)/../proj4/proj-4.9.2/lib' to Projection Library Search Paths\n\n"
